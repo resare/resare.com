@@ -11,6 +11,19 @@
 
 html { background: #f7f7f7; }
 
+	/* Default: light mode */
+body {
+    background-color: #fffaf0;
+    color: #222;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c2028;
+        color: #f5f0e8;
+    }
+}
 body {
   margin: 0;
   color: var(--ink);
