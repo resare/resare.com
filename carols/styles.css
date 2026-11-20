@@ -91,14 +91,7 @@ h1 {
   object-fit: contain;
 }
 
-map-illustration { width: 50%; margin: 16px auto 22px; }
-.main-illustration img {
-  display: block;
-  width: min(100%, 570px);
-  max-height: 440px;
-  margin: 0 auto;
-  object-fit: contain;
-}
+.map-illustration { width: 50%; margin: 16px auto 22px; }
 
 .charity-copy {
   max-width: 650px;
