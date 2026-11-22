@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carols RSVP – Admin</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 20px;
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+
+    .number {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #1c2028; color: #fff; }
+      .stat { background: #303641; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Christmas Carols – RSVP</h1>
+
+  <div class="stats">
+    <div class="stat">
+      <div>Responses</div>
+      <div class="number" id="responses">–</div>
+    </div>
+    <div class="stat">
+      <div>Expected attendees</div>
+      <div class="number" id="attendees">–</div>
+    </div>
+  </div>
+
+  <p id="status">Loading statistics…</p>
+
+  <script>
+    const scriptURL = "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnQC8AKXQS2z8JKXZi97MQT7aQncRPuGw7Oe9yeORNb6fHYrG-ccgGMmRje294RdnPwno4ZLgPlBJO_K_xZXizCpHDgF0CqAgIIbfVNo50lCC2qYFT9lZoUaaNGtuBExD7NZQ8SEj6Fa4zIc3FT97gL-zQsHg21UX5gCE-OrSqtuZjnocmgejhslpGTWRadIGMIWzWgivGvc2-TcsLGIM-gUJ7QxeO5mA-HnNIX5_2vAXuUGRnlu06NnUE71xp9vcV2uyGlI_4Vg067tX8oO3g6W-ekEpw&lib=M9I0oys-qibcxX_IBWx4mjMZ3ibJN0JiI";
+
+    function updateStats(data) {
+      document.getElementById("responses").textContent =
+        data.responses;
+      document.getElementById("attendees").textContent =
+        data.attendees;
+
+      document.getElementById("status").textContent =
+        "Updated: " + new Date(data.updated).toLocaleString("en-GB");
+    }
+
+    function loadStats() {
+      const oldScript = document.getElementById("stats-script");
+      if (oldScript) oldScript.remove();
+
+      const script = document.createElement("script");
+      script.id = "stats-script";
+      script.src = scriptURL +
+        "?callback=updateStats&t=" + Date.now();
+
+      script.onerror = () => {
+        document.getElementById("status").textContent =
+          "Could not load statistics.";
+      };
+
+      document.body.appendChild(script);
+    }
+
+    loadStats();
+    setInterval(loadStats, 60000);
+  </script>
+</body>
+</html>
